@@ -4,6 +4,7 @@
 from starkware.cairo.common.cairo_builtins import HashBuiltin
 from starkware.starknet.common.syscalls import get_caller_address
 from starkware.cairo.common.math import unsigned_div_rem, assert_nn_le
+from starkware.cairo.common.alloc import alloc
 
 const RED = 0
 const YELLOW = 1
@@ -261,6 +262,17 @@ func check_diagonal_topright{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
     return (total_topright)
 end
 
+func append_games_data{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(user: felt, n: felt, game_ids: felt*):
+    if n==0:
+        return()
+    end
+    append_games_data(user, n-1, game_ids)
+    let index = n -1
+    let (game_id) = player_games.read(user, index)
+    assert game_ids[index] = game_id
+    return ()
+end
+
 @view
 func view_cell{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         game_id: felt, row : felt, col : felt) -> (value : felt):
@@ -269,9 +281,25 @@ func view_cell{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr
 end
 
 @view
+func check_game_status{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(game_id: felt) -> (status : felt):
+    let (status) = game_status.read(game_id)
+    return (status)
+end
+
+@view
 func game_id{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (value : felt):
     let (current_id) = current_game_id.read()
     return (current_id)
+end
+
+@view
+func get_user_games{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(user: felt) -> (game_ids_len: felt, game_ids: felt*):
+    alloc_locals
+    let (local count) = player_games_counter.read(user)
+    let (local game_ids : felt*) = alloc()
+
+    append_games_data(user, count, game_ids)
+    return (count, game_ids)
 end
 
 @storage_var
@@ -307,6 +335,7 @@ end
 func player_games(address : felt, nth_index : felt) -> (game_id : felt):
 end
 
+# the total number of games a player is in
 @storage_var
 func player_games_counter(address: felt) -> (total_games : felt):
 end
