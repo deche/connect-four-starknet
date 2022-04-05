@@ -267,9 +267,20 @@ func append_games_data{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_c
         return()
     end
     append_games_data(user, n-1, game_ids)
-    let index = n -1
+    let index = n - 1
     let (game_id) = player_games.read(user, index)
     assert game_ids[index] = game_id
+    return ()
+end
+
+func append_turns_history{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(game_id: felt, n: felt, turns: felt*):
+    if n==0:
+        return()
+    end
+    append_turns_history(game_id, n-1, turns)
+    let index = n - 1
+    let (turn) = game_turn_history.read(game_id, index)
+    assert turns[index] = turn[1]
     return ()
 end
 
@@ -302,6 +313,16 @@ func get_user_games{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_chec
     return (count, game_ids)
 end
 
+@view
+func get_game_history{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(game_id: felt) -> (turns_len: felt, turns: felt*):
+    alloc_locals
+    let (local count) = game_total_turns.read(game_id)
+    let (local turns : felt*) = alloc()
+
+    append_turns_history(game_id, count, turns)
+    return (count, turns)
+end
+
 @storage_var
 func board(game_id : felt, row : felt, col : felt) -> (val : felt):
 end
@@ -327,7 +348,7 @@ func game_total_turns(game_id : felt) -> (total_turns : felt):
 end
 
 @storage_var
-func game_turn_history(game_id : felt, nth_turn : felt) -> (column : felt):
+func game_turn_history(game_id : felt, nth_turn : felt) -> (cell: (felt, felt)):
 end
 
 # list of player's games
@@ -402,7 +423,10 @@ func player_move{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_p
 
     # get shich row should be filled
     let (local user_row) = highest_empty_cell(game_id, HEIGHT - 1, col)
+    
     board.write(game_id, user_row, col, 1 + player_index)
+    game_turn_history.write(game_id, total_turns, (user_row, col))
+    game_total_turns.write(game_id, total_turns + 1)
 
     check_win(game_id, user_row, col, player_index)
 
