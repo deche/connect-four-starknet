@@ -1,0 +1,265 @@
+[
+    {
+        "inputs": [
+            {
+                "name": "game_id",
+                "type": "felt"
+            },
+            {
+                "name": "row",
+                "type": "felt"
+            },
+            {
+                "name": "col",
+                "type": "felt"
+            }
+        ],
+        "name": "highest_empty_cell",
+        "outputs": [
+            {
+                "name": "row",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "game_id",
+                "type": "felt"
+            },
+            {
+                "name": "row",
+                "type": "felt"
+            },
+            {
+                "name": "col",
+                "type": "felt"
+            },
+            {
+                "name": "player",
+                "type": "felt"
+            }
+        ],
+        "name": "check_left",
+        "outputs": [
+            {
+                "name": "points",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "game_id",
+                "type": "felt"
+            },
+            {
+                "name": "row",
+                "type": "felt"
+            },
+            {
+                "name": "col",
+                "type": "felt"
+            },
+            {
+                "name": "player",
+                "type": "felt"
+            }
+        ],
+        "name": "check_win",
+        "outputs": [
+            {
+                "name": "result",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "game_id",
+                "type": "felt"
+            },
+            {
+                "name": "row",
+                "type": "felt"
+            },
+            {
+                "name": "col",
+                "type": "felt"
+            },
+            {
+                "name": "player",
+                "type": "felt"
+            }
+        ],
+        "name": "check_row",
+        "outputs": [
+            {
+                "name": "points",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "game_id",
+                "type": "felt"
+            },
+            {
+                "name": "row",
+                "type": "felt"
+            },
+            {
+                "name": "col",
+                "type": "felt"
+            }
+        ],
+        "name": "view_cell",
+        "outputs": [
+            {
+                "name": "value",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "game_id",
+                "type": "felt"
+            }
+        ],
+        "name": "check_game_status",
+        "outputs": [
+            {
+                "name": "status",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "game_id",
+        "outputs": [
+            {
+                "name": "value",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "user",
+                "type": "felt"
+            }
+        ],
+        "name": "get_user_games",
+        "outputs": [
+            {
+                "name": "game_ids_len",
+                "type": "felt"
+            },
+            {
+                "name": "game_ids",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "game_id",
+                "type": "felt"
+            }
+        ],
+        "name": "get_game_history",
+        "outputs": [
+            {
+                "name": "turns_len",
+                "type": "felt"
+            },
+            {
+                "name": "turns",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "game_id",
+                "type": "felt"
+            },
+            {
+                "name": "row",
+                "type": "felt"
+            },
+            {
+                "name": "col",
+                "type": "felt"
+            },
+            {
+                "name": "val",
+                "type": "felt"
+            }
+        ],
+        "name": "make_move",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "new_game",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "game_id",
+                "type": "felt"
+            }
+        ],
+        "name": "join_game",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "game_id",
+                "type": "felt"
+            },
+            {
+                "name": "col",
+                "type": "felt"
+            }
+        ],
+        "name": "player_move",
+        "outputs": [],
+        "type": "function"
+    }
+]

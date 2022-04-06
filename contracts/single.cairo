@@ -52,7 +52,6 @@ func highest_empty_cell{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_
     end
 end
 
-@view
 func check_left{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         game_id : felt, row : felt, col : felt, player : felt) -> (points : felt):
     alloc_locals
@@ -113,7 +112,7 @@ func check_bottom{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_
     end
 end
 
-@view
+
 func check_win{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         game_id : felt, row : felt, col : felt, player : felt) -> (result : felt):
     alloc_locals
@@ -156,7 +155,7 @@ func player_wins{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_p
     return ()
 end
 
-@view
+
 func check_row{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
         game_id : felt, row : felt, col : felt, player : felt) -> (points : felt):
     alloc_locals
@@ -282,13 +281,6 @@ func append_turns_history{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, rang
     let (turn) = game_turn_history.read(game_id, index)
     assert turns[index] = turn[1]
     return ()
-end
-
-@view
-func view_cell{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-        game_id: felt, row : felt, col : felt) -> (value : felt):
-    let (stored_value) = board.read(game_id, row, col)
-    return (stored_value)
 end
 
 @view

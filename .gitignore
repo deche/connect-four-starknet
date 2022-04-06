@@ -1,1 +1,3 @@
-/contracts/output
+./contracts/output
+./tests
+.pytest_cache
